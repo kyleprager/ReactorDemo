@@ -1,0 +1,56 @@
+buildscript {
+    ext {
+        springBootVersion = '1.2.5.RELEASE'
+        reactorVersion    = '2.0.4.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
+        classpath("io.spring.gradle:dependency-management-plugin:0.5.2.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot' 
+apply plugin: 'io.spring.dependency-management' 
+
+jar {
+    baseName = 'reactordemo'
+    version = '0.0.1-SNAPSHOT'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter")
+//    testCompile("org.springframework.boot:spring-boot-starter-test")
+    compile "io.projectreactor:reactor-core:$reactorVersion"
+    compile "io.projectreactor:reactor-bus:$reactorVersion"
+    compile "io.projectreactor:reactor-stream:$reactorVersion"
+    compile "io.projectreactor.spring:reactor-spring-core:$reactorVersion"
+    compile "io.projectreactor.spring:reactor-spring-context:$reactorVersion"
+    compile "io.projectreactor.spring:reactor-spring-webmvc:$reactorVersion"
+    compile 'com.google.guava:guava:18.0'
+}
+
+
+eclipse {
+    classpath {
+         containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+         containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
